@@ -1,7 +1,7 @@
 extends Node2D
 
 
-@onready var level: Node2D = $Level
+# @onready var level: Node2D = $Level
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

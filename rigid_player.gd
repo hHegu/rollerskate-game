@@ -1,52 +1,58 @@
 extends RigidBody2D
 class_name Player
 
-@export var angular_speed := 300
-@export var max_speed := 100
-@export var jump_strength := 10000
+@export var angular_speed := 1000
+@export var max_speed := 400
+@export var jump_strength := 6000
 
-@export var wheel_left: RigidBody2D
-@export var wheel_right: RigidBody2D
+@export var sprite: Sprite2D
 @export var floor_check: RayCast2D
 
-@onready var wheels = [wheel_left, wheel_right]
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+var is_on_floor := false
+var contact_normal: Vector2
+var max_jump_angle := deg_to_rad(20)
 
 
 func _physics_process(delta: float) -> void:
-	var is_on_floor = floor_check.is_colliding()
 	var dir := Input.get_axis("left", "right")
 
+	sprite.global_position = global_position
+	is_on_floor = (get_contact_count() > 0) or floor_check.is_colliding()
 
+	var velocity_signed = signf(linear_velocity.x)
+
+	if velocity_signed != 0:
+		sprite.scale.x = velocity_signed
 	
 	if abs(dir) > 0:
-		if is_on_floor: 
-			spin_wheels(dir, delta)
+		if is_on_floor:
+			move_character(dir, delta)
 		else:
 			spin_character(dir, delta)
 	
-	if Input.is_action_just_pressed("jump") and is_on_floor:
-		apply_impulse(Vector2.UP * jump_strength)
+	if Input.is_action_pressed("jump") and is_on_floor:
+		print(contact_normal)
+
+		var jump_impulse_dir = Vector2.UP
+
+		if contact_normal != null:
+			jump_impulse_dir = contact_normal.clamp(Vector2.UP.rotated(-max_jump_angle), Vector2.UP.rotated(max_jump_angle))
+			
+		apply_impulse(jump_impulse_dir * jump_strength)
 
 
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	if state.get_contact_count() > 0:
+		contact_normal = state.get_contact_local_normal(0)
+		sprite.rotation = contact_normal.angle() + PI / 2
 
-	# if abs(dir) > 0 && linear_velocity.x < 150.0:
-	# 	print(linear_velocity.x)
-	# 	print(dir)
-	# 	apply_force(Vector2(dir, 0) * 800.0)
-	
-	# if Input.is_action_just_pressed("jump"):
-	# 	print("?")
-	# 	apply_force(Vector2.UP * 10000.0)
 
-func spin_wheels(direction, delta):
-	for wheel in wheels:
-		if abs(wheel.angular_velocity) > max_speed: return
-		wheel.apply_torque_impulse(direction * angular_speed * delta * 60)
+func move_character(direction, delta):
+	if abs(angular_velocity) > max_speed: return
+
+	apply_torque_impulse(direction * angular_speed * delta * 60)
 
 
 func spin_character(direction, delta):
+	sprite.rotation = sprite.rotation + (direction * (PI / 17) * delta * 60)
 	apply_torque_impulse(direction * angular_speed * delta * 60)
