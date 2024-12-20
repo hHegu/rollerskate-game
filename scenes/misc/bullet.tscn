@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqs51eb70ojym"]
+
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_40i6k"]
+[ext_resource type="Texture2D" uid="uid://lu6bfj21uvo3" path="res://assets/aseprite/bullet.png" id="2_7y5ub"]
+[ext_resource type="PackedScene" uid="uid://cph44meixf7h0" path="res://scenes/misc/trail.tscn" id="2_ts18b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1xt7i"]
+radius = 1.98235
+
+[node name="Bullet" type="CharacterBody2D" node_paths=PackedStringArray("damage_area")]
+script = ExtResource("1_40i6k")
+projectile_speed = 1000.0
+damage_area = NodePath("Area2D")
+
+[node name="Trail" parent="." instance=ExtResource("2_ts18b")]
+
+[node name="Bullet" type="Sprite2D" parent="."]
+texture = ExtResource("2_7y5ub")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_1xt7i")

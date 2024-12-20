@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://v614wf57br3x"]
+
+[ext_resource type="Script" path="res://scripts/polygon_2d_collision_creator.gd" id="1_u2y3a"]
+
+[node name="Polygon2D" type="Polygon2D"]
+color = Color(0.101961, 0.109804, 0.172549, 1)
+script = ExtResource("1_u2y3a")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
