@@ -1,4 +1,5 @@
 extends Area2D
+class_name VelocityAddArea
 
 @export var added_speed := Vector2.ZERO
 
@@ -9,5 +10,4 @@ func _ready() -> void:
 
 func on_body_entered(body: Node2D):
 	if body is Player:
-		print("applying impulse")
-		body.apply_impulse(added_speed)
+		body.velocity += added_speed

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://byapkgwslske0"]
+
+[ext_resource type="Texture2D" uid="uid://de4ut1n84o6ko" path="res://assets/kenney/tilemap_packed.png" id="1_8npia"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82wb1"]
+atlas = ExtResource("1_8npia")
+region = Rect2(234, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0ef6"]
+atlas = ExtResource("1_8npia")
+region = Rect2(234, 18, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_73jse"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_82wb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0ef6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="Goo" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_73jse")
+autoplay = "default"
+frame_progress = 0.427847

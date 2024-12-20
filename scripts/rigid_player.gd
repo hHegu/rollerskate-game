@@ -1,5 +1,4 @@
 extends RigidBody2D
-class_name Player
 
 @export var angular_speed := 1500
 @export var max_speed := 350

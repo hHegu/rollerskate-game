@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://v614wf57br3x"]
+[gd_scene load_steps=2 format=3 uid="uid://dj2yx1l23abmn"]
 
 [ext_resource type="Script" path="res://scripts/polygon_2d_collision_creator.gd" id="1_u2y3a"]
 

@@ -1,14 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhlsmb73qo7pc"]
+[gd_scene load_steps=11 format=3 uid="uid://cv14065j5vyt6"]
 
 [ext_resource type="Script" path="res://scripts/rigid_player.gd" id="1_s5ejw"]
 [ext_resource type="Texture2D" uid="uid://dlqacharge4yu" path="res://assets/aseprite/gun.png" id="2_3nsx5"]
 [ext_resource type="Texture2D" uid="uid://lgs05l8umwob" path="res://scenes/player/rollerskater.png" id="2_8nfyc"]
-[ext_resource type="Script" path="res://scenes/player/gun.gd" id="2_y0feb"]
+[ext_resource type="Script" path="res://scripts/gun.gd" id="2_y0feb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cp533"]
 
-[sub_resource type="Animation" id="Animation_aa6b5"]
-resource_name = "idle"
+[sub_resource type="Animation" id="Animation_ju13k"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -46,8 +46,8 @@ tracks/2/keys = {
 "values": [Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_ju13k"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_aa6b5"]
+resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
