@@ -40,5 +40,10 @@ func get_player():
 	return get_tree().get_nodes_in_group("player")[0]
 
 
-func format_timer_time(time_seconds: float):
+func format_timer_time(time_seconds):
+	if time_seconds == null:
+		return "--:--"
 	return "%d:%d" % [time_seconds, fmod(time_seconds * 100.0, 100.0)]
+
+func get_main() -> Main:
+	return get_tree().current_scene.get_node_or_null('/root/Main')

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LevelResource" load_steps=3 format=3 uid="uid://bvsww3mijgp7e"]
+
+[ext_resource type="Script" path="res://scripts/resource_scripts/level_res.gd" id="1_s1kkl"]
+[ext_resource type="PackedScene" uid="uid://d3p515xlsrwpt" path="res://scenes/levels/level_3.tscn" id="1_yyuex"]
+
+[resource]
+script = ExtResource("1_s1kkl")
+level_name = "Level 3"
+level_scene = ExtResource("1_yyuex")
+gold_time_seconds = 15.0
+silver_time_seconds = 17.0
+bronze_time_seconds = 20.0

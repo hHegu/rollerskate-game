@@ -2,7 +2,7 @@ extends Node2D
 
 @export var anim: AnimationPlayer
 
-@onready var fire_cooldown_timer := Utils.create_timer(self, 0.2)
+@onready var fire_cooldown_timer := Utils.create_timer(self, 0.15)
 
 var bullet_preload = preload("res://scenes/misc/bullet.tscn")
 

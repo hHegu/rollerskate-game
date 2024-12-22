@@ -15,11 +15,13 @@ const GRIND_SPEED := 200.0
 const DOWN_SLOPE_SPEED_X := 5.0
 const DOWN_SLOPE_SPEED_Y := 5.0
 
-const FRICTION := 5.0
+const FRICTION := 3.0
 const AIR_FRICTION := 0.1
 const GRAVITY := 10
 
 @export var fsm: FSM
+
+signal player_died
 
 func apply_gravity():
 	velocity += Vector2.DOWN * GRAVITY 
@@ -31,5 +33,6 @@ func apply_friction():
 	else:
 		velocity.x = move_toward(velocity.x, 0, AIR_FRICTION)
 
-func die():
-	fsm.change_state("DeathState")
+func die(hide_body: bool = false):
+	fsm.change_state("DeathState", {"hide_body": hide_body})
+	player_died.emit()

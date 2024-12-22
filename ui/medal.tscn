@@ -4,6 +4,8 @@
 [ext_resource type="Script" path="res://ui/medal.gd" id="2_6amvi"]
 
 [node name="Medal" type="TextureRect"]
+modulate = Color(0.647059, 0.164706, 0.164706, 1)
 texture = ExtResource("1_b3sui")
+stretch_mode = 2
 script = ExtResource("2_6amvi")
 medal_rank = 0

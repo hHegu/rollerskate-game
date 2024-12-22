@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://byapkgwslske0"]
+[gd_scene load_steps=7 format=3 uid="uid://byapkgwslske0"]
 
 [ext_resource type="Texture2D" uid="uid://de4ut1n84o6ko" path="res://assets/kenney/tilemap_packed.png" id="1_8npia"]
+[ext_resource type="PackedScene" uid="uid://c2uytanm4kc0e" path="res://scenes/objects/death_area.tscn" id="2_m87l5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_82wb1"]
 atlas = ExtResource("1_8npia")
@@ -24,7 +25,16 @@ animations = [{
 "speed": 2.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_rxenq"]
+radius = 9.0
+
 [node name="Goo" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_73jse")
 autoplay = "default"
 frame_progress = 0.427847
+
+[node name="DeathArea" parent="." instance=ExtResource("2_m87l5")]
+evaporate = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathArea"]
+shape = SubResource("CircleShape2D_rxenq")

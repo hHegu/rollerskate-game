@@ -19,14 +19,23 @@ class_name LevelUI
 
 @export var your_time_display: RichTextLabel
 @export var your_rank_display: Medal
+@export var personal_best_display: RichTextLabel
 
+@export var try_again_button: Button
+@export var next_level_button: Button
+
+@onready var main := Utils.get_main()
 
 func initialize():
 	goal_container.visible = false
 
-	gold_goal_display.update_display(Medal.Rank.GOLD, level.level_resource.gold_time_seconds)
-	silver_goal_display.update_display(Medal.Rank.SILVER, level.level_resource.silver_time_seconds)
-	bronze_goal_display.update_display(Medal.Rank.BRONZE, level.level_resource.bronze_time_seconds)
+	if main == null: return
+
+	var level_res = main.current_level
+
+	gold_goal_display.update_display(Medal.Rank.GOLD, level_res.gold_time_seconds)
+	silver_goal_display.update_display(Medal.Rank.SILVER, level_res.silver_time_seconds)
+	bronze_goal_display.update_display(Medal.Rank.BRONZE, level_res.bronze_time_seconds)
 
 
 func set_countdown_number(cd: int):
@@ -51,8 +60,17 @@ func do_countdown():
 func show_run_data(player_time):
 	goal_container.visible = true
 	timer_text.visible = false
-
-	player_time += get_tree().get_node_count_in_group("enemy") * 2
+	try_again_button.grab_focus()
+	next_level_button.visible = main.has_next_level()
 
 	your_time_display.text = "Your time: " + Utils.format_timer_time(player_time)
-	your_rank_display.medal_rank = level.level_resource.get_rank(player_time)
+	
+	var rank = main.current_level.get_rank(player_time)
+
+	if rank != null:
+		your_rank_display.medal_rank = rank
+		your_rank_display.visible = true
+	else:
+		your_rank_display.visible = false
+
+	personal_best_display.text =  "Personal best: " + Utils.format_timer_time(PersonalBest.get_personal_best(Utils.get_main().current_level))

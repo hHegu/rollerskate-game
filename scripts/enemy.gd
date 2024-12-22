@@ -2,6 +2,11 @@ extends CharacterBody2D
 class_name Enemy
 
 var death_effect = preload("res://scenes/effects/zombie_death_effect.tscn")
+@export var sprite: Sprite2D
+
+
+func _ready() -> void:
+	sprite.flip_h = randf() > 0.5
 
 
 func die():

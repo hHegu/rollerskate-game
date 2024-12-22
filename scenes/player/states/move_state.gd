@@ -58,8 +58,7 @@ func state_physics_process(_delta: float) -> void:
 		if rot > 300 or rot < 60:
 			sprite.rotation = 0;
 		else:
-			## TODO: death
-			player.die()
+			player.die(false)
 
 
 func get_max_speed():

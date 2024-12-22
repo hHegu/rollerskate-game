@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://f7t17n4edf4y"]
+
+[ext_resource type="Theme" uid="uid://d2icbpf4oolhm" path="res://resources/theme.tres" id="1_jt1sa"]
+[ext_resource type="PackedScene" uid="uid://bt11gppcb24gj" path="res://ui/medal_goal_display.tscn" id="1_s7g7a"]
+[ext_resource type="Script" path="res://ui/level_selection_panel.gd" id="2_xfqxl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e50iu"]
+bg_color = Color(0.0980392, 0.466667, 0.00784314, 0.372549)
+expand_margin_left = 8.0
+expand_margin_top = 8.0
+expand_margin_right = 8.0
+expand_margin_bottom = 8.0
+
+[node name="LevelSelectionPanel" type="PanelContainer" node_paths=PackedStringArray("gold_goal_display", "silver_goal_display", "bronze_goal_display", "your_best_text", "level_button")]
+theme = ExtResource("1_jt1sa")
+theme_override_styles/panel = SubResource("StyleBoxFlat_e50iu")
+script = ExtResource("2_xfqxl")
+gold_goal_display = NodePath("LevelSelection/Gold")
+silver_goal_display = NodePath("LevelSelection/Silver")
+bronze_goal_display = NodePath("LevelSelection/Bronze")
+your_best_text = NodePath("LevelSelection/RichTextLabel")
+level_button = NodePath("LevelSelection/Level")
+
+[node name="LevelSelection" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Level" type="Button" parent="LevelSelection"]
+layout_mode = 2
+text = "Level 1"
+
+[node name="Gold" parent="LevelSelection" instance=ExtResource("1_s7g7a")]
+layout_mode = 2
+
+[node name="Silver" parent="LevelSelection" instance=ExtResource("1_s7g7a")]
+layout_mode = 2
+
+[node name="Bronze" parent="LevelSelection" instance=ExtResource("1_s7g7a")]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Best
+22:22"
+fit_content = true

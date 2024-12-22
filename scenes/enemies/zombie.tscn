@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhyrkmpdbwh2v"]
+[gd_scene load_steps=8 format=3 uid="uid://bhyrkmpdbwh2v"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="2_p35it"]
 [ext_resource type="Texture2D" uid="uid://cpenfo80bgwqs" path="res://scenes/enemies/zombie.png" id="3_4ji05"]
+[ext_resource type="PackedScene" uid="uid://c2uytanm4kc0e" path="res://scenes/objects/death_area.tscn" id="3_hlqk2"]
 
 [sub_resource type="Animation" id="Animation_pcd62"]
 length = 0.1
@@ -27,9 +28,13 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_fcf4y"]
 radius = 8.0
 
-[node name="Zombie" type="CharacterBody2D" groups=["enemy"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_2nyu3"]
+radius = 4.0
+
+[node name="Zombie" type="CharacterBody2D" node_paths=PackedStringArray("sprite") groups=["enemy"]]
 collision_layer = 16
 script = ExtResource("2_p35it")
+sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -60,3 +65,9 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_fcf4y")
+
+[node name="DeathArea" parent="." instance=ExtResource("3_hlqk2")]
+position = Vector2(0, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathArea"]
+shape = SubResource("CircleShape2D_2nyu3")

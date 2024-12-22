@@ -1,11 +1,147 @@
-[gd_scene load_steps=3 format=3 uid="uid://0tmfwuaoi0g4"]
+[gd_scene load_steps=12 format=3 uid="uid://0tmfwuaoi0g4"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_w4eij"]
-[ext_resource type="PackedScene" uid="uid://et4j7sc5jftm" path="res://scenes/levels/level_1.tscn" id="2_uiq6m"]
+[ext_resource type="Script" path="res://scripts/resource_scripts/level_res.gd" id="2_7tkdp"]
+[ext_resource type="Resource" uid="uid://kli04pbvvwds" path="res://resources/levels/level_one.tres" id="3_gxpyy"]
+[ext_resource type="Script" path="res://ui/ui.gd" id="4_3do4d"]
+[ext_resource type="Resource" uid="uid://yxfd2ld3m47i" path="res://resources/levels/level_two.tres" id="4_3q8cn"]
+[ext_resource type="Theme" uid="uid://d2icbpf4oolhm" path="res://resources/theme.tres" id="4_j3avb"]
+[ext_resource type="Resource" uid="uid://bvsww3mijgp7e" path="res://resources/levels/level_three.tres" id="5_v7phq"]
 
-[node name="Main" type="Node2D"]
+[sub_resource type="Animation" id="Animation_2ylno"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-49, -423)]
+}
+
+[sub_resource type="Animation" id="Animation_wyli1"]
+resource_name = "in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-49, -423), Vector2(-49, -55)]
+}
+
+[sub_resource type="Animation" id="Animation_swubw"]
+resource_name = "out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-49, -55), Vector2(-49, 368)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_47puo"]
+_data = {
+"RESET": SubResource("Animation_2ylno"),
+"in": SubResource("Animation_wyli1"),
+"out": SubResource("Animation_swubw")
+}
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("world", "ui", "level_transition_anim")]
 script = ExtResource("1_w4eij")
+levels = Array[ExtResource("2_7tkdp")]([ExtResource("3_gxpyy"), ExtResource("4_3q8cn"), ExtResource("5_v7phq")])
+world = NodePath("World")
+ui = NodePath("UI")
+level_transition_anim = NodePath("UI/ColorRect/AnimationPlayer")
 
 [node name="World" type="Node2D" parent="."]
 
-[node name="Level1" parent="World" instance=ExtResource("2_uiq6m")]
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("main_menu", "level_select", "level_select_button", "exit_button", "back_to_main_menu_button", "level_list")]
+layer = 3
+script = ExtResource("4_3do4d")
+main_menu = NodePath("MainMenu")
+level_select = NodePath("LevelSelect")
+level_select_button = NodePath("MainMenu/VBoxContainer/LevelSelectButton")
+exit_button = NodePath("MainMenu/VBoxContainer/QuitButton")
+back_to_main_menu_button = NodePath("LevelSelect/VBoxContainer/BackToMainMenuButton")
+level_list = NodePath("LevelSelect/VBoxContainer/LevelList")
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+z_index = 99
+offset_left = -49.0
+offset_top = -423.0
+offset_right = 705.0
+offset_bottom = -3.0
+color = Color(0, 0.574675, 0.136977, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/ColorRect"]
+libraries = {
+"": SubResource("AnimationLibrary_47puo")
+}
+
+[node name="MainMenu" type="CenterContainer" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_j3avb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MainMenu"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[center](VERY) AGGRESSIVE ROLLERBLADER"
+fit_content = true
+
+[node name="LevelSelectButton" type="Button" parent="UI/MainMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Level select"
+
+[node name="QuitButton" type="Button" parent="UI/MainMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Quit"
+
+[node name="LevelSelect" type="CenterContainer" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_j3avb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelect"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="LevelList" type="HBoxContainer" parent="UI/LevelSelect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="BackToMainMenuButton" type="Button" parent="UI/LevelSelect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Back to main menu"

@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://dujnmsuc5l32k"]
+[gd_scene load_steps=8 format=3 uid="uid://dujnmsuc5l32k"]
 
 [ext_resource type="Script" path="res://ui/level_ui.gd" id="1_gry75"]
 [ext_resource type="Theme" uid="uid://d2icbpf4oolhm" path="res://resources/theme.tres" id="1_yh41o"]
 [ext_resource type="PackedScene" uid="uid://dfbjy8baxgvdv" path="res://ui/medal.tscn" id="2_non65"]
 [ext_resource type="PackedScene" uid="uid://bt11gppcb24gj" path="res://ui/medal_goal_display.tscn" id="3_52wk5"]
+[ext_resource type="Script" path="res://ui/try_again_button.gd" id="5_ajuvb"]
+[ext_resource type="Script" path="res://ui/next_level_button.gd" id="6_7e0xi"]
+[ext_resource type="Script" path="res://ui/back_to_menu_button.gd" id="6_pepri"]
 
-[node name="LevelUI" type="CanvasLayer" node_paths=PackedStringArray("countdown_text", "countdown_container", "timer_text", "goal_container", "gold_goal_display", "silver_goal_display", "bronze_goal_display", "your_time_display", "your_rank_display")]
+[node name="LevelUI" type="CanvasLayer" node_paths=PackedStringArray("countdown_text", "countdown_container", "timer_text", "goal_container", "gold_goal_display", "silver_goal_display", "bronze_goal_display", "your_time_display", "your_rank_display", "personal_best_display", "try_again_button", "next_level_button")]
 script = ExtResource("1_gry75")
 countdown_text = NodePath("CountdownContainer/CenterContainer/CountdownTimerText")
 countdown_container = NodePath("CountdownContainer")
@@ -14,8 +17,11 @@ goal_container = NodePath("GoalContainer")
 gold_goal_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/GoldGoalDisplay")
 silver_goal_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/SliverGoalDisplay")
 bronze_goal_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/BronzeGoalDisplay")
-your_time_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/HBoxContainer4/YourTimeText")
+your_time_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/YourTimeText")
 your_rank_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/HBoxContainer/Medal")
+personal_best_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/PersonalBestText")
+try_again_button = NodePath("GoalContainer/CenterContainer/VBoxContainer/HBoxContainer2/TryAgainButton")
+next_level_button = NodePath("GoalContainer/CenterContainer/VBoxContainer/HBoxContainer2/NextLevelButton")
 
 [node name="CountdownContainer" type="ColorRect" parent="."]
 visible = false
@@ -84,16 +90,19 @@ scroll_active = false
 [node name="Medal" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_non65")]
 modulate = Color(0.647059, 0.164706, 0.164706, 1)
 layout_mode = 2
-stretch_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="GoalContainer/CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="YourTimeText" type="RichTextLabel" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer4"]
+[node name="YourTimeText" type="RichTextLabel" parent="GoalContainer/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(88.62, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Your time: 14:32"
+fit_content = true
+
+[node name="PersonalBestText" type="RichTextLabel" parent="GoalContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(157.15, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Personal best: 14:32"
 fit_content = true
 
 [node name="Control" type="Control" parent="GoalContainer/CenterContainer/VBoxContainer"]
@@ -119,10 +128,17 @@ layout_mode = 2
 [node name="TryAgainButton" type="Button" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Try again"
+script = ExtResource("5_ajuvb")
+
+[node name="BackToMenuButton" type="Button" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Level select"
+script = ExtResource("6_pepri")
 
 [node name="NextLevelButton" type="Button" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Go to next level"
+script = ExtResource("6_7e0xi")
 
 [node name="TimerText" type="RichTextLabel" parent="."]
 anchors_preset = 5

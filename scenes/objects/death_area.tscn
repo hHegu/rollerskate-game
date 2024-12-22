@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2uytanm4kc0e"]
+
+[ext_resource type="Script" path="res://scenes/objects/death_area.gd" id="1_8p6hn"]
+
+[node name="DeathArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_8p6hn")

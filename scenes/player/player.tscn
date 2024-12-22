@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://u7criykjv6ef"]
+[gd_scene load_steps=27 format=3 uid="uid://u7criykjv6ef"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1knsf"]
 [ext_resource type="Texture2D" uid="uid://lgs05l8umwob" path="res://scenes/player/rollerskater.png" id="2_j4dum"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scenes/player/states/grind_state.gd" id="7_1pdvp"]
 [ext_resource type="Texture2D" uid="uid://bh6yx0avkl25h" path="res://assets/aseprite/rollerskater.png" id="8_n2ykw"]
 [ext_resource type="Script" path="res://scenes/player/states/death_state.gd" id="9_7oo46"]
+[ext_resource type="Texture2D" uid="uid://cc4s4h06qgc7l" path="res://assets/small_particles.png" id="10_l6kvg"]
 
 [sub_resource type="Animation" id="Animation_ju13k"]
 length = 0.001
@@ -226,6 +227,16 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="Gradient" id="Gradient_aacnj"]
 colors = PackedColorArray(1, 1, 1, 0.705882, 1, 1, 1, 0)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ks6ba"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_sq0cq"]
+offsets = PackedFloat32Array(0, 0.773381, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
 collision_layer = 2
 floor_constant_speed = true
@@ -322,6 +333,22 @@ texture = ExtResource("8_n2ykw")
 gravity = Vector2(0, 0)
 color_ramp = SubResource("Gradient_aacnj")
 
+[node name="DeathParticles" type="CPUParticles2D" parent="Utils"]
+material = SubResource("CanvasItemMaterial_ks6ba")
+emitting = false
+amount = 30
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.39
+texture = ExtResource("10_l6kvg")
+direction = Vector2(0, -1)
+spread = 97.55
+gravity = Vector2(0, 0)
+initial_velocity_max = 49.69
+color_ramp = SubResource("Gradient_sq0cq")
+anim_offset_max = 1.0
+
 [node name="FSM" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("5_rbxwl")
 current_state = NodePath("MoveState")
@@ -341,12 +368,13 @@ speed_boost_effect = NodePath("../../Utils/SpeedBoostParticles")
 anim = NodePath("../../AnimationPlayer")
 sprite = NodePath("../../Sprite2D")
 
-[node name="DeathState" type="Node" parent="FSM" node_paths=PackedStringArray("sprite", "anim", "gun_container", "speed_boost_effect")]
+[node name="DeathState" type="Node" parent="FSM" node_paths=PackedStringArray("sprite", "anim", "gun_container", "speed_boost_effect", "death_effect")]
 script = ExtResource("9_7oo46")
 sprite = NodePath("../../Sprite2D")
 anim = NodePath("../../AnimationPlayer")
 gun_container = NodePath("../../Sprite2D/GunContainer")
 speed_boost_effect = NodePath("../../Utils/SpeedBoostParticles")
+death_effect = NodePath("../../Utils/DeathParticles")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(150, 0)

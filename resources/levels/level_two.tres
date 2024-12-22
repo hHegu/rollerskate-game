@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LevelResource" load_steps=3 format=3 uid="uid://yxfd2ld3m47i"]
+
+[ext_resource type="PackedScene" uid="uid://cdpdk8dakawl8" path="res://scenes/levels/level_2.tscn" id="1_ctpw5"]
+[ext_resource type="Script" path="res://scripts/resource_scripts/level_res.gd" id="1_ee72w"]
+
+[resource]
+script = ExtResource("1_ee72w")
+level_name = "Level 2"
+level_scene = ExtResource("1_ctpw5")
+gold_time_seconds = 13.5
+silver_time_seconds = 15.0
+bronze_time_seconds = 18.0
