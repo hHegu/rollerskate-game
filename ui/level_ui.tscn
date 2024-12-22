@@ -1,0 +1,138 @@
+[gd_scene load_steps=5 format=3 uid="uid://dujnmsuc5l32k"]
+
+[ext_resource type="Script" path="res://ui/level_ui.gd" id="1_gry75"]
+[ext_resource type="Theme" uid="uid://d2icbpf4oolhm" path="res://resources/theme.tres" id="1_yh41o"]
+[ext_resource type="PackedScene" uid="uid://dfbjy8baxgvdv" path="res://ui/medal.tscn" id="2_non65"]
+[ext_resource type="PackedScene" uid="uid://bt11gppcb24gj" path="res://ui/medal_goal_display.tscn" id="3_52wk5"]
+
+[node name="LevelUI" type="CanvasLayer" node_paths=PackedStringArray("countdown_text", "countdown_container", "timer_text", "goal_container", "gold_goal_display", "silver_goal_display", "bronze_goal_display", "your_time_display", "your_rank_display")]
+script = ExtResource("1_gry75")
+countdown_text = NodePath("CountdownContainer/CenterContainer/CountdownTimerText")
+countdown_container = NodePath("CountdownContainer")
+timer_text = NodePath("TimerText")
+goal_container = NodePath("GoalContainer")
+gold_goal_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/GoldGoalDisplay")
+silver_goal_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/SliverGoalDisplay")
+bronze_goal_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/BronzeGoalDisplay")
+your_time_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/HBoxContainer4/YourTimeText")
+your_rank_display = NodePath("GoalContainer/CenterContainer/VBoxContainer/HBoxContainer/Medal")
+
+[node name="CountdownContainer" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.509804)
+
+[node name="CenterContainer" type="CenterContainer" parent="CountdownContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yh41o")
+
+[node name="CountdownTimerText" type="RichTextLabel" parent="CountdownContainer/CenterContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[center]3"
+fit_content = true
+
+[node name="GoalContainer" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yh41o")
+color = Color(0, 0, 0, 0.509804)
+
+[node name="CenterContainer" type="CenterContainer" parent="GoalContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yh41o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GoalContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GoalContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "Level Finished!"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GoalContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(28.665, 0)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Rank: "
+fit_content = true
+scroll_active = false
+
+[node name="Medal" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_non65")]
+modulate = Color(0.647059, 0.164706, 0.164706, 1)
+layout_mode = 2
+stretch_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="GoalContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="YourTimeText" type="RichTextLabel" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(88.62, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Your time: 14:32"
+fit_content = true
+
+[node name="Control" type="Control" parent="GoalContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="GoldGoalDisplay" parent="GoalContainer/CenterContainer/VBoxContainer" instance=ExtResource("3_52wk5")]
+layout_mode = 2
+
+[node name="SliverGoalDisplay" parent="GoalContainer/CenterContainer/VBoxContainer" instance=ExtResource("3_52wk5")]
+layout_mode = 2
+
+[node name="BronzeGoalDisplay" parent="GoalContainer/CenterContainer/VBoxContainer" instance=ExtResource("3_52wk5")]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="GoalContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="GoalContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TryAgainButton" type="Button" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Try again"
+
+[node name="NextLevelButton" type="Button" parent="GoalContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Go to next level"
+
+[node name="TimerText" type="RichTextLabel" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -55.0
+offset_top = 10.0
+offset_right = 56.0
+offset_bottom = 55.0
+grow_horizontal = 2
+theme = ExtResource("1_yh41o")
+bbcode_enabled = true
+text = "[center]30.0"

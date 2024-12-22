@@ -1,6 +1,30 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d2icbpf4oolhm"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d2icbpf4oolhm"]
 
 [ext_resource type="FontFile" uid="uid://dntkt5vqxkerh" path="res://assets/fonts/Kenney Pixel.ttf" id="1_cpn2t"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_582t2"]
+bg_color = Color(0.575946, 1, 0.51973, 1)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.575946, 1, 0.51973, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_micte"]
+bg_color = Color(0.0655258, 0.0655258, 0.0655258, 1)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+
 [resource]
 default_font = ExtResource("1_cpn2t")
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/colors/icon_hover_color = Color(0, 0, 0, 1)
+Button/styles/focus = SubResource("StyleBoxFlat_582t2")
+Button/styles/hover = SubResource("StyleBoxFlat_582t2")
+Button/styles/normal = SubResource("StyleBoxFlat_micte")
+Button/styles/pressed = SubResource("StyleBoxFlat_582t2")
