@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfbjy8baxgvdv"]
+
+[ext_resource type="Texture2D" uid="uid://by02rjh5vp06h" path="res://assets/aseprite/medal.png" id="1_b3sui"]
+[ext_resource type="Script" path="res://ui/medal.gd" id="2_6amvi"]
+
+[node name="Medal" type="TextureRect"]
+texture = ExtResource("1_b3sui")
+script = ExtResource("2_6amvi")
+medal_rank = 0

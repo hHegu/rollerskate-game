@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhyrkmpdbwh2v"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="2_p35it"]
+[ext_resource type="Texture2D" uid="uid://cpenfo80bgwqs" path="res://scenes/enemies/zombie.png" id="3_4ji05"]
+
+[sub_resource type="Animation" id="Animation_pcd62"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eqr51"]
+_data = {
+"idle": SubResource("Animation_pcd62")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fcf4y"]
+radius = 8.0
+
+[node name="Zombie" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 16
+script = ExtResource("2_p35it")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -7)
+texture = ExtResource("3_4ji05")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://assets/aseprite/zombie.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "81cc041d7f3906f623d0877d74475b8f"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eqr51")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_fcf4y")

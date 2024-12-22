@@ -6,15 +6,41 @@ extends Node2D
 
 var bullet_preload = preload("res://scenes/misc/bullet.tscn")
 
-func _physics_process(_delta: float) -> void:
-	global_rotation = (get_global_mouse_position()- global_position).angle()
-	# look_at(get_global_mouse_position())
 
-	if Input.is_action_pressed("fire") and fire_cooldown_timer.is_stopped():
+var is_using_controller := true
+
+
+func _physics_process(_delta: float) -> void:
+	# handle_aim_direction()
+
+	if Input.is_action_pressed("fire"):
 		fire()
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion or event is InputEventMouseButton:
+		is_using_controller = false
+
+	if event is InputEventJoypadButton or event is InputEventMouseMotion:
+		is_using_controller = true
+
+
+
+func handle_aim_direction():
+	if is_using_controller:
+		var input_vector = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down", 0.3)
+
+		if input_vector.length() == 0: return
+
+		global_rotation = input_vector.angle()
+		fire()
+	else:
+		global_rotation = (get_global_mouse_position() - global_position).angle()
+
+
+
 func fire():
+	if !fire_cooldown_timer.is_stopped(): return
 	fire_cooldown_timer.start()
 	anim.play("shoot")
 

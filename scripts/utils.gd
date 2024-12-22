@@ -35,3 +35,10 @@ func get_level_root():
 	
 	print_debug("Level root is set as the current scene!")
 	return get_tree().current_scene
+
+func get_player():
+	return get_tree().get_nodes_in_group("player")[0]
+
+
+func format_timer_time(time_seconds: float):
+	return "%d:%d" % [time_seconds, fmod(time_seconds * 100.0, 100.0)]

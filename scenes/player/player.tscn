@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://u7criykjv6ef"]
+[gd_scene load_steps=24 format=3 uid="uid://u7criykjv6ef"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1knsf"]
 [ext_resource type="Texture2D" uid="uid://lgs05l8umwob" path="res://scenes/player/rollerskater.png" id="2_j4dum"]
@@ -7,9 +7,8 @@
 [ext_resource type="Script" path="res://scripts/state_machine/fsm.gd" id="5_rbxwl"]
 [ext_resource type="Script" path="res://scenes/player/states/move_state.gd" id="6_t2lim"]
 [ext_resource type="Script" path="res://scenes/player/states/grind_state.gd" id="7_1pdvp"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_6bxnc"]
-radius = 7.07107
+[ext_resource type="Texture2D" uid="uid://bh6yx0avkl25h" path="res://assets/aseprite/rollerskater.png" id="8_n2ykw"]
+[ext_resource type="Script" path="res://scenes/player/states/death_state.gd" id="9_7oo46"]
 
 [sub_resource type="Animation" id="Animation_ju13k"]
 length = 0.001
@@ -124,6 +123,41 @@ _data = {
 "shoot": SubResource("Animation_jmk3q")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6bxnc"]
+radius = 7.07107
+
+[sub_resource type="Animation" id="Animation_c7x71"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_65ph3"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
 [sub_resource type="Animation" id="Animation_xn6m4"]
 length = 0.1
 loop_mode = 1
@@ -172,24 +206,9 @@ tracks/0/keys = {
 "values": [1, 0, 2]
 }
 
-[sub_resource type="Animation" id="Animation_65ph3"]
-length = 0.1
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ra8ab"]
 _data = {
+"death": SubResource("Animation_c7x71"),
 "grind": SubResource("Animation_65ph3"),
 "idle": SubResource("Animation_xn6m4"),
 "jump": SubResource("Animation_5x5jk"),
@@ -204,12 +223,16 @@ point_count = 2
 offsets = PackedFloat32Array(0, 0.791367, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="Gradient" id="Gradient_aacnj"]
+colors = PackedColorArray(1, 1, 1, 0.705882, 1, 1, 1, 0)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
 collision_layer = 2
 floor_constant_speed = true
 floor_max_angle = 3.14159
 floor_snap_length = 10.0
 script = ExtResource("1_1knsf")
+fsm = NodePath("FSM")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -234,27 +257,27 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://assets/aseprite/rollerskater.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "2774a1a82b6eca62d59862e0e7861d7c"
+metadata/_aseprite_wizard_source_file_hash_ = "80a7ed087710c4ed3d6bdcf991b42196"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -7)
-shape = SubResource("CircleShape2D_6bxnc")
-
-[node name="GunContainer" type="Node2D" parent="." node_paths=PackedStringArray("anim")]
-position = Vector2(0, -8)
+[node name="GunContainer" type="Node2D" parent="Sprite2D" node_paths=PackedStringArray("anim")]
+position = Vector2(0, -1)
 script = ExtResource("3_0fql8")
 anim = NodePath("AnimationPlayer")
 
-[node name="Gun" type="Sprite2D" parent="GunContainer"]
+[node name="Gun" type="Sprite2D" parent="Sprite2D/GunContainer"]
 z_index = 1
 position = Vector2(7, 2)
 texture = ExtResource("4_adlcc")
 offset = Vector2(2.115, -0.63)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GunContainer"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D/GunContainer"]
 libraries = {
 "": SubResource("AnimationLibrary_rysyh")
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_6bxnc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -264,8 +287,8 @@ libraries = {
 [node name="Utils" type="Node2D" parent="."]
 
 [node name="RailDetectRaycast" type="RayCast2D" parent="Utils"]
-position = Vector2(13, -20)
-target_position = Vector2(0, 65)
+position = Vector2(0, -11)
+target_position = Vector2(0, 18)
 collision_mask = 4
 
 [node name="Line2D" type="Line2D" parent="Utils"]
@@ -290,21 +313,40 @@ scale_amount_curve = SubResource("Curve_5psbi")
 color = Color(1, 1, 0, 1)
 color_ramp = SubResource("Gradient_obtsi")
 
+[node name="SpeedBoostParticles" type="CPUParticles2D" parent="Utils"]
+z_index = -1
+position = Vector2(0, -7)
+emitting = false
+lifetime = 0.2
+texture = ExtResource("8_n2ykw")
+gravity = Vector2(0, 0)
+color_ramp = SubResource("Gradient_aacnj")
+
 [node name="FSM" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("5_rbxwl")
 current_state = NodePath("MoveState")
 
-[node name="MoveState" type="Node" parent="FSM" node_paths=PackedStringArray("sprite", "rail_detect_raycast", "anim")]
+[node name="MoveState" type="Node" parent="FSM" node_paths=PackedStringArray("sprite", "rail_detect_raycast", "anim", "speed_boost_particle_effect")]
 script = ExtResource("6_t2lim")
 sprite = NodePath("../../Sprite2D")
 rail_detect_raycast = NodePath("../../Utils/RailDetectRaycast")
 anim = NodePath("../../AnimationPlayer")
+speed_boost_particle_effect = NodePath("../../Utils/SpeedBoostParticles")
 
-[node name="GrindState" type="Node" parent="FSM" node_paths=PackedStringArray("rail_detect_raycast", "particle_effect", "anim")]
+[node name="GrindState" type="Node" parent="FSM" node_paths=PackedStringArray("rail_detect_raycast", "particle_effect", "speed_boost_effect", "anim", "sprite")]
 script = ExtResource("7_1pdvp")
 rail_detect_raycast = NodePath("../../Utils/RailDetectRaycast")
 particle_effect = NodePath("../../Utils/GrindParticles")
+speed_boost_effect = NodePath("../../Utils/SpeedBoostParticles")
 anim = NodePath("../../AnimationPlayer")
+sprite = NodePath("../../Sprite2D")
+
+[node name="DeathState" type="Node" parent="FSM" node_paths=PackedStringArray("sprite", "anim", "gun_container", "speed_boost_effect")]
+script = ExtResource("9_7oo46")
+sprite = NodePath("../../Sprite2D")
+anim = NodePath("../../AnimationPlayer")
+gun_container = NodePath("../../Sprite2D/GunContainer")
+speed_boost_effect = NodePath("../../Utils/SpeedBoostParticles")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(150, 0)

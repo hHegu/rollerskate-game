@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bt11gppcb24gj"]
+
+[ext_resource type="PackedScene" uid="uid://dfbjy8baxgvdv" path="res://ui/medal.tscn" id="1_fxr3u"]
+[ext_resource type="Theme" uid="uid://d2icbpf4oolhm" path="res://resources/theme.tres" id="1_i36br"]
+[ext_resource type="Script" path="res://ui/medal_goal_display.gd" id="2_vye71"]
+
+[node name="MedalGoalDisplay" type="HBoxContainer"]
+offset_right = 320.0
+offset_bottom = 23.0
+theme = ExtResource("1_i36br")
+script = ExtResource("2_vye71")
+
+[node name="Medal" parent="." instance=ExtResource("1_fxr3u")]
+modulate = Color(0.647059, 0.164706, 0.164706, 1)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+stretch_mode = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 4
+text = "14:00"
+fit_content = true

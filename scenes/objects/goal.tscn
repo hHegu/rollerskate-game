@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0m3njsrhj2f2"]
+
+[ext_resource type="Texture2D" uid="uid://jtltr8aksfey" path="res://assets/kenney/kenney_platformer_tiles.png" id="1_i5b3l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3iej"]
+atlas = ExtResource("1_i5b3l")
+region = Rect2(198, 90, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wa1re"]
+atlas = ExtResource("1_i5b3l")
+region = Rect2(216, 90, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4cpji"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3iej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wa1re")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_corxq"]
+atlas = ExtResource("1_i5b3l")
+region = Rect2(198, 108, 18, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lsn5g"]
+size = Vector2(18, 138)
+
+[node name="Goal" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -18)
+sprite_frames = SubResource("SpriteFrames_4cpji")
+autoplay = "default"
+frame = 1
+frame_progress = 0.0503785
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_corxq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -60)
+shape = SubResource("RectangleShape2D_lsn5g")

@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhn3nrb8ylkrb"]
+
+[ext_resource type="Script" path="res://scripts/velocity_add_area.gd" id="1_3swon"]
+[ext_resource type="Texture2D" uid="uid://de4ut1n84o6ko" path="res://assets/kenney/tilemap_packed.png" id="2_hpoc3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2sg7v"]
+radius = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7tw4"]
+atlas = ExtResource("2_hpoc3")
+region = Rect2(37, 72, 34, 18)
+
+[node name="Ramp" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_3swon")
+added_speed = Vector2(0, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_2sg7v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_u7tw4")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-19, 9, 0, -9, 19, 9)

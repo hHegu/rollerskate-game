@@ -4,12 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://lu6bfj21uvo3" path="res://assets/aseprite/bullet.png" id="2_7y5ub"]
 [ext_resource type="PackedScene" uid="uid://cph44meixf7h0" path="res://scenes/misc/trail.tscn" id="2_ts18b"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1xt7i"]
-radius = 1.98235
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_75ye3"]
+size = Vector2(11.4922, 2.00226)
 
 [node name="Bullet" type="CharacterBody2D" node_paths=PackedStringArray("damage_area")]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_40i6k")
-projectile_speed = 1000.0
 damage_area = NodePath("Area2D")
 
 [node name="Trail" parent="." instance=ExtResource("2_ts18b")]
@@ -19,6 +20,8 @@ texture = ExtResource("2_7y5ub")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
+collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_1xt7i")
+position = Vector2(-4.2539, 0.00416613)
+shape = SubResource("RectangleShape2D_75ye3")

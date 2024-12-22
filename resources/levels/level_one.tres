@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LevelResource" load_steps=2 format=3 uid="uid://kli04pbvvwds"]
+
+[ext_resource type="Script" path="res://scripts/resource_scripts/level_res.gd" id="1_ev1mq"]
+
+[resource]
+script = ExtResource("1_ev1mq")
+gold_time_seconds = 14.0
+silver_time_seconds = 16.0
+bronze_time_seconds = 18.0
